@@ -6,8 +6,8 @@ double func(double x, int max_n){
   double zz = z*z;
   double sum = 0;
   double a = z;
-  for (int n = 1; n<max_n; n++){
-    sum += a/(2*n-1);
+  for (int n = 1; n<max_n; n+=2){
+    sum += a/n;
     a *= zz;
   }
   sum += a;
