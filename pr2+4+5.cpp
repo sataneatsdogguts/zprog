@@ -8,15 +8,17 @@ void printarr(std::vector<int> A){
     for (int i =0; i<A.size(); i++){
         std::cout << A[i] << " ";
     };
-} std::vector<int> gen(int s){
+} 
+
+std::vector<int> gen(int s){
   std::vector<int> A(s);
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distrib(1,100);      
-     for (int i =0; i<s; i++){
-        A[i] = distrib(gen);
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> distrib(1,100);      
+  for (int i =0; i<s; i++){
+    A[i] = distrib(gen);
     }
-     return A;
+   return A;
 }
 
 void step(int speed, std::vector<int> &A){
@@ -44,6 +46,9 @@ void sort(std::vector<int> & A){
     }
 }
 
+void ReligionSort(){
+  std::cout << "Бог создал этот массив отсортированным.\nЛюбой несогласный идёт против самого мироздания и должен быть сожжён на костре, чтобы небеса были спокойны.\n";
+}
 
 void BubbleSort(std::vector<int> & A){
   for (int i=A.size(); i>0; i--){
@@ -83,12 +88,14 @@ int main()
    printarr(A);
    std::cout << "\n\n";
    
-   std::cout<< "Как отсортировать массив?\n\n1) Bubble Sort\n2) Сортировка выбором\n3) QuickSort\n\n";
+   std::cout<< "Как отсортировать массив?\n\n1) Bubble Sort\n2) Сортировка выбором\n3) QuickSort\n4) Сортировка верой\n\n";
    int num; 
    std::cin >> num;
+   std::cout << "\n";
    if (num == 1) BubbleSort(A);
    else if (num == 2) sort(A);
    else if (num == 3) QuickSort(A, 0, A.size()-1);
+   else if (num == 4) ReligionSort();
    else{
      std::cout << "INVALID NUMBER";
      return -1 ;
