@@ -82,8 +82,8 @@ if (end > i) QuickSort(A, i, end);
 
 int main()
 {
-   // std::vector<int> A = gen(10); 
-   std::vector<int> A = {8, 5, 9, 6}; 
+   std::vector<int> A = gen(10); 
+   // std::vector<int> A = {8, 5, 9, 6}; 
    std::cout << "Изначальный массив: ";
    printarr(A);
    std::cout << "\n\n";
