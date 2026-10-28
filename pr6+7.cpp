@@ -2,38 +2,40 @@
 #include <string>
 #include <vector>
 
+template <typename T>
 struct Node{
-	std::string val;
-	Node * prev;
-	Node * next;
+	T val;
+	Node<T> * prev;
+	Node<T> * next;
 
-	Node(std::string &s) {
+	Node(const T &s) {
         val = s;
         prev = nullptr;
         next = nullptr;
     }
 };
 
+template <typename T>
 struct List{
-	Node * start;
+	Node<T> * start;
 	int count;
 
 	List(){ start = nullptr; count = 0;}
-	List(std::string &s){ start = new Node(s); start->next = start; start->prev = start; count = 1;}
+	List(const T &s){ start = new Node<T>(s); start->next = start; start->prev = start; count = 1;}
 	~List() {
         if (!start) return;
-		Node* current = start->next;
+		Node<T>* current = start->next;
 		while (current != start){
-			Node* next_node = current->next;
+			Node<T>* next_node = current->next;
 			delete current;
 			current = next_node;
 		}
         delete start;
 		start = nullptr;
 	}
-	void Add(std::string &s, Node* node){
+	void Add(const T &s, Node<T>* node){
         if (node == nullptr) return; 
-		Node * new_node = new Node(s);
+		Node<T> * new_node = new Node<T>(s);
 
 		if (count == 0){
 			new_node->next = new_node;
@@ -41,7 +43,7 @@ struct List{
 			start = new_node;
 		}
 		else {
-			Node * next_node = node->next;
+			Node<T> * next_node = node->next;
 			new_node->next = next_node;
 			new_node->prev = node;
 
@@ -52,7 +54,7 @@ struct List{
 		count++;
 	}
 
-	void Remove(Node*node){
+	void Remove(Node<T>*node){
         if (node == nullptr) return; 
         else if (count == 1){
 			start = nullptr;
@@ -68,7 +70,7 @@ struct List{
 		count--;
 	}
 
-	void Swap(Node* n1, Node * n2){
+	void Swap(Node<T>* n1, Node<T> * n2){
         if (n1== nullptr || n2 == nullptr) return; 
 		if (count == 2){
 			start = start->next;
@@ -96,7 +98,7 @@ struct List{
 				n1->next->prev = n2;
 				n2->prev->next = n1;
 				n2->next->prev = n1;
-				Node * u1= n1->next;
+				Node<T> * u1= n1->next;
 				n1->next=n2->next;
 				n2->next=u1;
 				u1 = n1->prev;
@@ -115,28 +117,57 @@ struct List{
 	}
     void Print(){
         if (!start) {std::cout << "don't try to look into the void..." << "\n"; return;}
-        Node * cur = start;
+        Node<T> * cur = start;
         do {
             std::cout << cur->val << "\t";
             cur = cur->next;
         } while (cur != start);
         std::cout << "\n";
-    }
+	}
+	void Sort()
+	{
+		if(count<2)
+		{
+			return;
+		}
+		else
+		{
+			for (int i=count; i>0; i--)
+			{
+				Node<T>* cur = start;
+				for (int n = 0; n<i; n++)
+				{
+					if (cur->val > cur->next->val)
+					{
+						Swap(cur, cur->next);
+					}
+					else
+					{
+						cur = cur -> next;
+					}
+				}
+			}
+			return;
+		}
+	}
+
 };
 
 int main(){
-    std::vector<std::string> s = {"sudo", "rm", "-rf", "--no-preserve-root", "/", "=)"};
+    std::vector<std::string> s = {"d", "a", "c", "b", "f", "e"};
     
-    List l(s[0]);
+    List<decltype(s)::value_type> l(s[0]);
     for (int i = s.size()-1; i>0; i--){
         l.Add(s[i], l.start);
     }
-    l.Print();
-
-    l.Swap(l.start->next, l.start->next->next);
-    l.Print();
-
-    l.Remove(l.start);
+	
+	l.Sort();
+    //l.Print();
+	//
+    //l.Swap(l.start->next, l.start->next->next);
+    //l.Print();
+	//
+    //l.Remove(l.start);
     l.Print();
 
     return 0;
