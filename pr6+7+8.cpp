@@ -132,20 +132,30 @@ struct List{
 		}
 		else
 		{
-			for (int i=count; i>0; i--)
+			Node<T>* i1;
+			Node<T>* cur;
+			Node<T>* last = start -> prev;
+			while (last != start)
 			{
-				Node<T>* cur = start;
-				for (int n = 0; n<i; n++)
+				i1 = start;
+				cur = start;
+				while (cur != last)
 				{
 					if (cur->val > cur->next->val)
 					{
+						if (last == cur -> next)
+						{
+							last = cur;
+						}
 						Swap(cur, cur->next);
+						i1 = cur -> prev;
 					}
 					else
 					{
 						cur = cur -> next;
 					}
 				}
+				last = i1;
 			}
 			return;
 		}
@@ -154,7 +164,7 @@ struct List{
 };
 
 int main(){
-    std::vector<std::string> s = {"d", "a", "c", "b", "f", "e"};
+    std::vector<std::string> s = {"d", "a"};
     
     List<decltype(s)::value_type> l(s[0]);
     for (int i = s.size()-1; i>0; i--){
